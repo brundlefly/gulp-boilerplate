@@ -21,7 +21,7 @@ const babel = require('gulp-babel');
 
 // Optimise Images
 function imageMin(cb) {
-    gulp.src("src/assets/images/*")
+    gulp.src("src/assets/images/**/*")
         .pipe(imagemin())
         .pipe(gulp.dest("dist/images"));
     cb();
@@ -74,7 +74,7 @@ function css(cb) {
 
 // Process Nunjucks
 function nunjucks(cb) {
-    gulp.src("src/pages/*.html")
+    gulp.src("src/pages/**/*.html")
         .pipe(
             nunjucksRender({
                 path: ["src/templates/"] // String or Array
@@ -108,8 +108,9 @@ function watch_files() {
         }
     });
     gulp.watch("src/assets/sass/**/*.scss", css);
+    gulp.watch("src/assets/images/", imageMin);
     gulp.watch("src/assets/js/*.js", js).on("change", browserSync.reload);
-    gulp.watch("src/pages/*.html", nunjucks).on("change", browserSync.reload);
+    gulp.watch("src/pages/**/*.html", nunjucks).on("change", browserSync.reload);
     gulp.watch("src/templates/*.html", nunjucks).on(
         "change",
         browserSync.reload
